@@ -9,8 +9,8 @@ show_usage() {
     echo "Install Docker on Ubuntu."
     echo ""
     echo "Options:"
-    echo "  --repo    Use repository-based installation instead of convenience script"
-    echo "  --help    Display this help message and exit"
+    echo "  -r, --repo    Use repository-based installation instead of convenience script"
+    echo "  -h, --help    Display this help message and exit"
 }
 
 # Function for repository-based installation

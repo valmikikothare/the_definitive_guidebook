@@ -9,7 +9,7 @@ show_usage() {
     echo "Load GNOME keybindings from saved dconf files."
     echo ""
     echo "Options:"
-    echo "  --help    Display this help message and exit"
+    echo "  -h, --help    Display this help message and exit"
 }
 
 # Get workspace directory

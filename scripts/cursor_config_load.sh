@@ -10,7 +10,7 @@ show_usage() {
     echo ""
     echo "Options:"
     echo "  -i, --input    Specify input directory containing Cursor configuration files"
-    echo "  --help         Display this help message and exit"
+    echo "  -h, --help     Display this help message and exit"
 }
 
 # Get workspace directory

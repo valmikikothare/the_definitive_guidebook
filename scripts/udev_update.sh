@@ -11,7 +11,7 @@ show_usage() {
     echo "Options:"
     echo "  -i, --input    Specify input file or directory containing udev rules"
     echo "                 Can be specified multiple times"
-    echo "  --help         Display this help message and exit"
+    echo "  -h, --help     Display this help message and exit"
 }
 
 # Get workspace directory

@@ -10,7 +10,7 @@ show_usage() {
     echo ""
     echo "Options:"
     echo "  -o, --output DIR    Specify output directory (default: repo_dir/configs/cursor)"
-    echo "  --help              Display this help message and exit"
+    echo "  -h, --help          Display this help message and exit"
 }
 
 # Get workspace directory

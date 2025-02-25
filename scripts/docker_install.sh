@@ -16,7 +16,7 @@ show_usage() {
 # Function for repository-based installation
 install_docker_repo() {
     echo "Using repository-based installation method..."
-    
+
     # Set up Docker's apt repository
     echo "Setting up Docker's apt repository..."
     sudo apt-get update
@@ -43,12 +43,12 @@ install_docker_repo() {
 # Function for convenience script installation
 install_docker_convenience() {
     echo "Using convenience script installation method..."
-    
+
     # Download and run the Docker convenience script
     echo "Downloading and running Docker convenience script..."
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
-    
+
     # Clean up the installation script
     echo "Cleaning up..."
     rm -f get-docker.sh
@@ -131,7 +131,7 @@ config['log-opts'] = {'max-size': '10m', 'max-file': '3'}
 print(json.dumps(config, indent=2))
 ")
     echo "$CONFIG_CONTENT" | sudo tee "$DOCKER_DAEMON_CONFIG" > /dev/null
-    
+
     # Restart Docker to apply changes
     sudo systemctl restart docker
 fi

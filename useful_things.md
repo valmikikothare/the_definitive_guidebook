@@ -34,6 +34,3 @@
     - 777	rwxrwxrwx	Everybody can do everything
     - +rwx	            Add read/write/execute permission, respectively
     - -rwx	            Remove read/write/execute permission, respectively
-    
-    
-    

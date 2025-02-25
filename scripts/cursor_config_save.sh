@@ -6,10 +6,10 @@ set -e
 # Function to display usage information
 show_usage() {
     echo "Usage: $0 [OPTIONS] [OUTPUT_DIR]"
-    echo "Save bash configuration files from home directory to repository."
+    echo "Save Cursor configuration files from Cursor config directory to repository."
     echo ""
     echo "Options:"
-    echo "  -o, --output DIR    Specify output directory (default: repo_dir/configs/bash)"
+    echo "  -o, --output DIR    Specify output directory (default: repo_dir/configs/cursor)"
     echo "  --help              Display this help message and exit"
 }
 
@@ -19,7 +19,7 @@ repo_dir=$(dirname $script_dir)
 configs_dir="$repo_dir/configs"
 
 # Default output directory
-OUTPUT_DIR="$configs_dir/bash"
+OUTPUT_DIR="$configs_dir/cursor"
 
 # Parse command line arguments
 # Flag to track if output directory has been set
@@ -68,23 +68,34 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
+# Determine Cursor config directory based on OS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    CURSOR_CONFIG_DIR="$HOME/Library/Application Support/Cursor/User"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux
+    CURSOR_CONFIG_DIR="$HOME/.config/Cursor/User"
+elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* || "$OSTYPE" == "win32" ]]; then
+    # Windows
+    CURSOR_CONFIG_DIR="$APPDATA/Cursor/User"
+else
+    echo "Error: Unsupported operating system: $OSTYPE" >&2
+    exit 1
+fi
+
 # Define source files
-SOURCE_BASHRC="$HOME/.bashrc"
-SOURCE_BASH_ALIASES="$HOME/.bash_aliases"
-SOURCE_PROFILE="$HOME/.profile"
-SOURCE_BASH_PROFILE="$HOME/.bash_profile"
+SOURCE_SETTINGS="$CURSOR_CONFIG_DIR/settings.json"
+SOURCE_KEYBINDINGS="$CURSOR_CONFIG_DIR/keybindings.json"
 
 # Define destination files
-DEST_BASHRC="$OUTPUT_DIR/.bashrc"
-DEST_BASH_ALIASES="$OUTPUT_DIR/.bash_aliases"
-DEST_PROFILE="$OUTPUT_DIR/.profile"
-DEST_BASH_PROFILE="$OUTPUT_DIR/.bash_profile"
+DEST_SETTINGS="$OUTPUT_DIR/settings.json"
+DEST_KEYBINDINGS="$OUTPUT_DIR/keybindings.json"
 
 # Create output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"
 
 # Check if any destination files already exist and ask for confirmation before overwriting
-if [ -f "$DEST_BASHRC" ] || [ -f "$DEST_BASH_ALIASES" ] || [ -f "$DEST_PROFILE" ] || [ -f "$DEST_BASH_PROFILE" ]; then
+if [ -f "$DEST_SETTINGS" ] || [ -f "$DEST_KEYBINDINGS" ]; then
     read -p "One or more destination files already exist in $OUTPUT_DIR! Overwrite? (y/n): " confirm
     if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
         echo "Operation cancelled."
@@ -109,9 +120,7 @@ copy_file() {
 }
 
 # Perform the copy operations
-copy_file "$SOURCE_BASHRC" "$DEST_BASHRC"
-copy_file "$SOURCE_BASH_ALIASES" "$DEST_BASH_ALIASES"
-copy_file "$SOURCE_PROFILE" "$DEST_PROFILE"
-copy_file "$SOURCE_BASH_PROFILE" "$DEST_BASH_PROFILE"
+copy_file "$SOURCE_SETTINGS" "$DEST_SETTINGS"
+copy_file "$SOURCE_KEYBINDINGS" "$DEST_KEYBINDINGS"
 
-echo "Bash configuration files have been saved successfully to $OUTPUT_DIR."
+echo "Cursor configuration files have been saved successfully to $OUTPUT_DIR."

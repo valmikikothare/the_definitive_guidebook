@@ -15,9 +15,10 @@ show_usage() {
 # Get workspace directory
 script_dir=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 repo_dir=$(dirname $script_dir)
+configs_dir="$repo_dir/configs"
 
 # Define default file paths
-OUTPUT_DIR="$repo_dir/keybindings"
+OUTPUT_DIR="$configs_dir/keybindings"
 KEYBINDINGS_FILE="keybindings.dconf"
 CUSTOM_KEYBINDINGS_FILE="custom-keybindings.dconf"
 

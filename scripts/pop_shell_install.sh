@@ -3,91 +3,45 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
+# Default installation directory
+install_dir="$HOME/opt"
+
 # Function to display usage information
 show_usage() {
-    echo "Usage: $0 [OPTIONS]"
+    echo "Usage: $0 [OPTIONS] [INSTALL_DIR]"
     echo "Install Pop Shell tiling window manager on Ubuntu."
     echo ""
     echo "Options:"
-    echo "  -h, --help      Display this help message and exit"
-}
-
-# Function for git-based installation
-install_from_git() {
-    echo "Using git-based installation method..."
-
-    # Install dependencies
-    echo "Installing build dependencies..."
-    sudo apt-get update
-    sudo apt-get install -y git node-typescript make gnome-shell-extensions gnome-shell-extension-prefs
-
-    # Clone the repository
-    echo "Cloning Pop Shell repository..."
-    git_dir="$HOME/.local/share/gnome-shell/extensions/pop-shell@system76.com"
-
-    # Create directory if it doesn't exist
-    mkdir -p "$(dirname "$git_dir")"
-
-    # Clone if directory doesn't exist, otherwise pull latest changes
-    if [ ! -d "$git_dir" ]; then
-        git clone https://github.com/pop-os/shell.git "$git_dir"
-    else
-        echo "Repository already exists. Pulling latest changes..."
-        cd "$git_dir"
-        git pull
-    fi
-
-    # Build the extension
-    echo "Building Pop Shell..."
-    cd "$git_dir"
-    make
-
-    echo "Git installation completed."
-}
-
-# Function to enable Pop Shell
-enable_pop_shell() {
-    echo "Enabling Pop Shell..."
-
-    # Enable the extension
-    gnome-extensions enable pop-shell@system76.com || {
-        echo "WARNING: Could not enable Pop Shell automatically."
-        echo "Please log out and log back in, then enable the extension manually using GNOME Extensions app."
-    }
-
-    # Restart GNOME Shell if running in X11 (not Wayland)
-    if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
-        echo "Restarting GNOME Shell..."
-        busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting GNOME Shell...")' > /dev/null || {
-            echo "WARNING: Could not restart GNOME Shell automatically."
-            echo "You may need to press Alt+F2, type 'r' and press Enter to restart GNOME Shell."
-        }
-    else
-        echo "NOTE: You're running Wayland. You'll need to log out and log back in for changes to take effect."
-    fi
+    echo "  -i, --install-dir DIR    Specify installation directory (default: $install_dir)"
+    echo "  -h, --help              Display this help message and exit"
 }
 
 # Parse command line arguments
-USE_GIT=false
-
+install_dir_set=false
 while [ $# -gt 0 ]; do
     case "$1" in
-        --ppa)
-            USE_GIT=false
+        -i|--install-dir)
             shift
-            ;;
-        --git)
-            USE_GIT=true
-            shift
+            if $install_dir_set; then
+                echo "Error: --install-dir option already specified"
+                show_usage
+                exit 1
+            fi
+            install_dir="$1"
+            install_dir_set=true
             ;;
         --help|-h)
             show_usage
             exit 0
             ;;
         *)
-            echo "Unknown option: $1"
-            show_usage
-            exit 1
+            if $install_dir_set; then
+                echo "Error: --install-dir option already specified"
+                show_usage
+                exit 1
+            fi
+            install_dir="$1"
+            install_dir_set=true
             ;;
     esac
     shift
@@ -101,15 +55,31 @@ if ! which gnome-shell > /dev/null; then
     exit 1
 fi
 
-# Install Pop Shell using the selected method
-if [ "$USE_GIT" = true ]; then
-    install_from_git
+# Install dependencies
+echo "Installing build dependencies..."
+sudo apt-get update
+sudo apt-get install -y git node-typescript make gnome-shell-extensions gnome-shell-extension-prefs
+
+# Create install directory if it doesn't exist
+mkdir -p "$install_dir"
+
+# Clone the repository if it doesn't exist, otherwise pull latest changes
+echo "Cloning Pop Shell repository..."
+repo_dir="$install_dir/shell"
+if [ ! -d "$repo_dir" ]; then
+    git clone https://github.com/pop-os/shell.git "$repo_dir"
 else
-    install_from_ppa
+    echo "Repository already exists. Pulling latest changes..."
+    cd "$repo_dir"
+    git pull
 fi
 
-# Enable Pop Shell
-enable_pop_shell
+# Build the extension
+echo "Building Pop Shell..."
+cd "$repo_dir"
+make local-install
+
+echo "Git installation completed."
 
 # Install additional helpful packages
 echo "Installing additional packages..."

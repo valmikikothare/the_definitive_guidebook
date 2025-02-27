@@ -1,4 +1,4 @@
-# Useful Things
+# Musings
 
 ## Bash
 
@@ -8,6 +8,8 @@ To search for a command in the history, press `ctrl+r` and then type the command
 To cycle through matches, press `ctrl+r` again.
 
 To use the last argument of the previous command again, press `alt+.`
+
+## Filesystem
 
 ### Set ownership
 To set ownership of a file or directory to the current user:
@@ -34,6 +36,19 @@ Common permissions:
 - 777	rwxrwxrwx	Everybody can do everything
 - +rwx	            Add read/write/execute permission, respectively
 - -rwx	            Remove read/write/execute permission, respectively
+
+### Disk usage
+To check disk usage by filesystem, use 
+```bash
+df -h
+```
+where `h` stands for human readable.
+
+To check disk usage by directory, use
+```bash
+du -sh *
+```
+where `s` stands for summary and `*` stands for all files and directories.
 
 ## Git
 

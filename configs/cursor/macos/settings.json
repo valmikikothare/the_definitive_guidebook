@@ -1,0 +1,177 @@
+{
+    "C_Cpp.clang_format_fallbackStyle": "Google",
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+    "C_Cpp.codeAnalysis.runAutomatically": true,
+    "cmake.pinnedCommands": [
+        "workbench.action.tasks.configureTaskRunner",
+        "workbench.action.tasks.runTask"
+    ],
+    "cmake.showOptionsMovedNotification": false,
+    "cursor.cpp.enablePartialAccepts": true,
+    "debug.allowBreakpointsEverywhere": true,
+    "editor.fastScrollSensitivity": 1,
+    "editor.fontFamily": "'JetBrainsMono Nerd Font Mono'",
+    "editor.fontSize": 14,
+    "editor.formatOnSave": true,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1
+    },
+    "files.associations": {
+        "*.env": "env",
+        "*.rviz": "yaml"
+    },
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "git.ignoreLegacyWarning": true,
+    "git.openRepositoryInParentFolders": "never",
+    "jupyter.askForKernelRestart": false,
+    "jupyter.debugJustMyCode": false,
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
+    "jupyter.pythonExportMethod": "commentMagics",
+    "notebook.codeActionsOnSave": {
+        "notebook.source.fixAll": "explicit",
+        "notebook.source.organizeImports": "explicit"
+    },
+    "notebook.defaultFormatter": "charliermarsh.ruff",
+    "notebook.editorOptionsCustomizations": {
+        "editor.indentSize": 4,
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "notebook.formatOnCellExecution": false,
+    "notebook.formatOnSave.enabled": true,
+    "notebook.output.scrolling": true,
+    "platformio-ide.autoOpenPlatformIOIniFile": false,
+    "platformio-ide.disablePIOHomeStartup": true,
+    "platformio-ide.pioHomeServerHttpHost": "0.0.0.0",
+    "platformio-ide.pioHomeServerHttpPort": 8008,
+    "redhat.telemetry.enabled": false,
+    "remote.autoForwardPortsSource": "hybrid",
+    "remote.SSH.remotePlatform": {
+        "om": "linux",
+        "omnode": "linux",
+        "openmind.mit.edu": "linux",
+        "tabletop": "linux"
+    },
+    "ruff.lineLength": 79,
+    "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.altClickMovesCursor": false,
+    "terminal.integrated.commandsToSkipShell": [
+        "workbench.action.terminal.newLocal",
+        "composer.startComposerPrompt",
+        "platformio-ide.upload",
+        "platformio-ide.build",
+        "workbench.action.toggleSidebarVisibility"
+    ],
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.fastScrollSensitivity": 1,
+    "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.shellIntegration.history": 1000,
+    "terminal.integrated.suggest.enabled": true,
+    "vim.easymotion": true,
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-b>": false,
+        "<C-c>": false,
+        "<C-f>": false,
+        "<C-i>": false,
+        "<C-l>": false,
+        "<C-m>": false,
+        "<C-o>": false,
+        "<C-p>": false,
+        "<C-v>": false,
+        "<C-w>": false,
+        "<C-x>": false
+    },
+    "vim.hlsearch": true,
+    "vim.incsearch": true,
+    "vim.insertModeKeyBindings": [
+        {
+            "after": [
+                "<Esc>"
+            ],
+            "before": [
+                "j",
+                "j"
+            ]
+        }
+    ],
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "after": [
+                "d",
+                "d"
+            ],
+            "before": [
+                "<leader>",
+                "d"
+            ]
+        },
+        {
+            "commands": [
+                ":nohl"
+            ],
+            "before": [
+                "<C-n>"
+            ]
+        },
+        {
+            "commands": [
+                "lineBreakInsert"
+            ],
+            "before": [
+                "K"
+            ],
+            "silent": true
+        }
+    ],
+    "vim.useCtrlKeys": true,
+    "vim.useSystemClipboard": true,
+    "window.autoDetectColorScheme": true,
+    "window.confirmSaveUntitledWorkspace": false,
+    "window.titleBarStyle": "custom",
+    "workbench.activityBar.orientation": "vertical",
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.editor.pinnedTabSizing": "shrink",
+    "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
+    "workbench.preferredLightColorTheme": "Catppuccin Latte",
+    "xml.server.vmargs": "-Xmx256M",
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[markdown]": {
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "other": "off",
+            "strings": "off"
+        },
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.unicodeHighlight.invisibleCharacters": false,
+        "editor.wordWrap": "on"
+    },
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true
+    },
+    "[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml"
+    }
+}

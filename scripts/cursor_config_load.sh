@@ -1,85 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Exit immediately if a command exits with a non-zero status
 set -e
 
+# Get cursor configs directory
+script_dir=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+repo_dir=$(dirname $script_dir)
+cursor_configs_dir="$repo_dir/configs/cursor"
+
 # Function to display usage information
 show_usage() {
     echo "Usage: $0 [OPTIONS]"
-    echo "Load Cursor configuration files from repository to Cursor config directory."
+    echo "Load cursor configuration files from repository to home directory."
     echo ""
     echo "Options:"
-    echo "  -i, --input    Specify input directory containing Cursor configuration files"
     echo "  -h, --help     Display this help message and exit"
 }
-
-# Get workspace directory
-script_dir=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
-repo_dir=$(dirname $script_dir)
-configs_dir="$repo_dir/configs"
-
-# Default source directory
-SOURCE_DIR="$configs_dir/cursor"
-
-# Parse command line arguments
-while [ $# -gt 0 ]; do
-    case "$1" in
-        -i|--input)
-            shift
-            if [[ -n "$1" && "$1" != -* ]]; then
-                SOURCE_DIR="$1"
-            else
-                echo "Error: Argument for $1 is missing" >&2
-                show_usage
-                exit 1
-            fi
-            ;;
-        --help|-h)
-            show_usage
-            exit 0
-            ;;
-        *)
-            # First positional argument is treated as input directory
-            if [[ "$1" != -* ]]; then
-                SOURCE_DIR="$1"
-            else
-                echo "Unknown option: $1" >&2
-                show_usage
-                exit 1
-            fi
-            ;;
-    esac
-    shift
-done
-
-# Verify the source directory exists (after all parsing)
-if [ ! -d "$SOURCE_DIR" ]; then
-    echo "Error: Source directory $SOURCE_DIR does not exist." >&2
-    exit 1
-fi
-
-# Determine Cursor config directory based on OS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # macOS
-    CURSOR_CONFIG_DIR="$HOME/Library/Application Support/Cursor/User"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Linux
-    CURSOR_CONFIG_DIR="$HOME/.config/Cursor/User"
-elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* || "$OSTYPE" == "win32" ]]; then
-    # Windows
-    CURSOR_CONFIG_DIR="$APPDATA/Cursor/User"
-else
-    echo "Error: Unsupported operating system: $OSTYPE" >&2
-    exit 1
-fi
-
-# Define source files
-SOURCE_SETTINGS="$SOURCE_DIR/settings.json"
-SOURCE_KEYBINDINGS="$SOURCE_DIR/keybindings.json"
-
-# Define destination files
-DEST_SETTINGS="$CURSOR_CONFIG_DIR/settings.json"
-DEST_KEYBINDINGS="$CURSOR_CONFIG_DIR/keybindings.json"
 
 # Function to backup and copy a file
 backup_and_copy() {
@@ -103,13 +39,69 @@ backup_and_copy() {
     cp "$source_file" "$dest_file"
 }
 
+# Parse command line arguments
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            show_usage
+            exit 0
+            ;;
+        *)
+            echo "Error: Invalid option: $1" >&2
+            show_usage
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+# Determine Cursor config directory based on OS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    platform="macos"
+    dest_dir="$HOME/Library/Application Support/Cursor/User"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux
+    platform="linux"
+    dest_dir="$HOME/.config/Cursor/User"
+elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* || "$OSTYPE" == "win32" ]]; then
+    # Windows
+    platform="windows"
+    dest_dir="$APPDATA/Cursor/User"
+else
+    echo "Error: Unsupported operating system: $OSTYPE" >&2
+    exit 1
+fi
+
+source_dir="$cursor_configs_dir/$platform"
+
+# Check if source directory exists
+if [[ ! -d "$source_dir" ]]; then
+    echo "Error: Source directory not found: $source_dir" >&2
+    exit 1
+fi
+
+# Check if destination directory exists
+if [[ ! -d "$dest_dir" ]]; then
+    echo "Error: Destination directory not found: $dest_dir" >&2
+    exit 1
+fi
+
+# Define source files
+source_settings="$source_dir/settings.json"
+source_keybindings="$source_dir/keybindings.json"
+
+# Define destination files
+dest_settings="$dest_dir/settings.json"
+dest_keybindings="$dest_dir/keybindings.json"
+
 # Confirm before copying
 echo "This script will copy Cursor configuration files to your Cursor config directory."
-echo "Source directory: $SOURCE_DIR"
-echo "Destination directory: $CURSOR_CONFIG_DIR"
+echo "Source directory: $source_dir"
+echo "Destination directory: $dest_dir"
 echo "The following files will be copied if they exist:"
-echo "  $SOURCE_SETTINGS -> $DEST_SETTINGS"
-echo "  $SOURCE_KEYBINDINGS -> $DEST_KEYBINDINGS"
+echo "  $source_settings -> $dest_settings"
+echo "  $source_keybindings -> $dest_keybindings"
 echo "Existing files will be backed up with .bak extension."
 read -p "Do you want to continue? (y/n): " confirm
 if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
@@ -118,7 +110,7 @@ if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
 fi
 
 # Perform the backup and copy operations
-backup_and_copy "$SOURCE_SETTINGS" "$DEST_SETTINGS"
-backup_and_copy "$SOURCE_KEYBINDINGS" "$DEST_KEYBINDINGS"
+backup_and_copy "$source_settings" "$dest_settings"
+backup_and_copy "$source_keybindings" "$dest_keybindings"
 echo "Cursor configuration files have been copied successfully."
 echo "You may need to restart Cursor for changes to take effect."

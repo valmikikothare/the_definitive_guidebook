@@ -8,6 +8,9 @@ script_dir=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 repo_dir=$(dirname $script_dir)
 cursor_configs_dir="$repo_dir/configs/cursor"
 
+# Load utils
+source "$script_dir/utils.sh"
+
 # Function to display usage information
 show_usage() {
     echo "Usage: $0 [OPTIONS]"
@@ -15,28 +18,6 @@ show_usage() {
     echo ""
     echo "Options:"
     echo "  -h, --help     Display this help message and exit"
-}
-
-# Function to backup and copy a file
-backup_and_copy() {
-    local source_file=$1
-    local dest_file=$2
-
-    # Check if source file exists
-    if [ ! -f "$source_file" ]; then
-        echo "Warning: Source file $source_file does not exist, skipping."
-        return 0
-    fi
-
-    # Check if destination file exists
-    if [ -f "$dest_file" ]; then
-        echo "Backing up existing $dest_file to ${dest_file}.bak"
-        cp "$dest_file" "${dest_file}.bak"
-    fi
-
-    # Copy the file
-    echo "Copying $source_file to $dest_file"
-    cp "$source_file" "$dest_file"
 }
 
 # Parse command line arguments
@@ -56,22 +37,17 @@ while [ $# -gt 0 ]; do
 done
 
 # Determine Cursor config directory based on OS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # macOS
-    platform="macos"
-    source_dir="$HOME/Library/Application Support/Cursor/User"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Linux
-    platform="linux"
-    source_dir="$HOME/.config/Cursor/User"
-elif [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* || "$OSTYPE" == "win32" ]]; then
-    # Windows
-    platform="windows"
-    source_dir="$APPDATA/Cursor/User"
-else
-    echo "Error: Unsupported operating system: $OSTYPE" >&2
-    exit 1
-fi
+case "$platform" in
+    "mac")
+        source_dir="$HOME/Library/Application Support/Cursor/User"
+        ;;
+    "linux")
+        source_dir="$HOME/.config/Cursor/User"
+        ;;
+    "windows")
+        source_dir="$APPDATA/Cursor/User"
+        ;;
+esac
 
 dest_dir="$cursor_configs_dir/$platform"
 

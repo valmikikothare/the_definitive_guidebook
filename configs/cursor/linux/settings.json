@@ -6,7 +6,6 @@
         "workbench.action.tasks.configureTaskRunner",
         "workbench.action.tasks.runTask"
     ],
-    "cmake.showOptionsMovedNotification": false,
     "cursor.cpp.enablePartialAccepts": true,
     "debug.allowBreakpointsEverywhere": true,
     "editor.fastScrollSensitivity": 1,
@@ -73,18 +72,14 @@
     "terminal.integrated.suggest.enabled": true,
     "vim.easymotion": true,
     "vim.handleKeys": {
-        "<C-a>": false,
         "<C-b>": false,
-        "<C-c>": false,
-        "<C-f>": false,
         "<C-i>": false,
-        "<C-l>": false,
         "<C-m>": false,
         "<C-o>": false,
         "<C-p>": false,
-        "<C-v>": false,
         "<C-w>": false,
-        "<C-x>": false
+        "<C-e>": false,
+        "<C-y>": false
     },
     "vim.hlsearch": true,
     "vim.incsearch": true,
@@ -173,5 +168,26 @@
     },
     "[xml]": {
         "editor.defaultFormatter": "redhat.vscode-xml"
-    }
+    },
+    "vim.cursorStylePerMode.insert": "block-outline",
+    "cursor.cpp.disabledLanguages": [
+        "plaintext"
+    ],
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                "/",
+                "/"
+            ],
+            "after": [
+                "y",
+                "/",
+                "<C-r>",
+                "\"",
+                "<CR>",
+                "N"
+            ]
+        }
+    ]
 }

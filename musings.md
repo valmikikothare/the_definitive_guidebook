@@ -113,3 +113,8 @@ pre-commit install
 ```bash
 pre-commit run --all-files
 ```
+
+## Check ports
+```bash
+sudo netstat -tulpn | grep LISTEN
+```

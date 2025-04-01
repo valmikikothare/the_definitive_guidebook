@@ -1,10 +1,11 @@
+// Place your key bindings in this file to override the defaults
 [
     {
-        "key": "cmd+l",
+        "key": "ctrl+l",
         "command": "-aichat.newchataction"
     },
     {
-        "key": "cmd+p",
+        "key": "ctrl+p",
         "command": "-expandLineSelection",
         "when": "textInputFocus"
     },
@@ -39,7 +40,11 @@
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     },
     {
-        "key": "cmd+shift+c",
+        "key": "ctrl+e",
+        "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+shift+c",
         "command": "-workbench.action.terminal.openNativeConsole",
         "when": "!terminalFocus"
     },
@@ -204,5 +209,20 @@
     {
         "key": "ctrl+shift+alt+b",
         "command": "workbench.action.tasks.test"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "explorer.newFile",
+        "when": "filesExplorerFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "editor.action.inlineSuggest.acceptNextWord",
+        "when": "cppSuggestion && !editorReadonly || inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "-aichat.fixerrormessage",
+        "when": "(arbitrary function)"
     }
 ]

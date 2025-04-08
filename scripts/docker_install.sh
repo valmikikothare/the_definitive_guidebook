@@ -120,17 +120,16 @@ if [ ! -f "$DOCKER_DAEMON_CONFIG" ]; then
 fi
 
 # Get current content and check if logging configuration exists
-CURRENT_CONFIG=$(sudo cat "$DOCKER_DAEMON_CONFIG")
-if ! echo "$CURRENT_CONFIG" | grep -q "log-driver"; then
+if ! sudo cat "$DOCKER_DAEMON_CONFIG" | jq -e '.log-driver' >/dev/null 2>&1; then
     # Create configuration with logging settings if it doesn't exist
-    CONFIG_CONTENT=$(echo "$CURRENT_CONFIG" | python3 -c "
-import sys, json
-config = json.load(sys.stdin) if sys.stdin.read().strip() else {}
-config['log-driver'] = 'json-file'
-config['log-opts'] = {'max-size': '10m', 'max-file': '3'}
-print(json.dumps(config, indent=2))
-")
-    echo "$CONFIG_CONTENT" | sudo tee "$DOCKER_DAEMON_CONFIG" > /dev/null
+    sudo cat "$DOCKER_DAEMON_CONFIG" | \
+    jq '. + {
+        "log-driver": "json-file",
+        "log-opts": {
+            "max-size": "10m",
+            "max-file": "3"
+        }
+    }' | sudo tee "$DOCKER_DAEMON_CONFIG" > /dev/null
 
     # Restart Docker to apply changes
     sudo systemctl restart docker

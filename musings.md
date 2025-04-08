@@ -1,5 +1,13 @@
 # Musings
 
+## Grub
+To automatically boot the saved boot entry, edit `/etc/default/grub` by 
+changing `GRUB_DEFAULT=saved` and adding `GRUB_SAVEDEFAULT=true`.
+
+To automatically open the grub menu every time, comment out 
+`GRUB_TIMEOUT_STYLE=hidden` and set `GRUB_TIMEOUT=5` to give you 5 seconds
+to choose a boot option.
+
 ## Bash
 
 ### Reverse search

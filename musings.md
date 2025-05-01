@@ -126,3 +126,20 @@ pre-commit run --all-files
 ```bash
 sudo netstat -tulpn | grep LISTEN
 ```
+
+## Vim
+
+### Save write-protected files
+Start vim with:
+```bash
+sudo vim <file>
+```
+Edit your file, then save as normal:
+```bash
+:w
+```
+
+If you forget to start vim with sudo, you can still save the file with:
+```bash
+:w !sudo tee %
+```

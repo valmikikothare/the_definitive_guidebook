@@ -137,7 +137,13 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# Python fix for cursor
+export unset PYTHON_HOME
+export unset PYTHON_PATH
+
 # source /usr/share/colcon_cd/function/colcon_cd.sh
 # source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+
+export COMPOSE_BAKE=true
 
 eval "$(starship init bash)"

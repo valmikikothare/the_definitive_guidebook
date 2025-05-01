@@ -46,5 +46,7 @@ function dbash() {
 alias dcd="docker compose down"
 alias dcl="docker container ls -a"
 alias dcb="docker compose build --pull"
+alias dcp="docker container prune"
 
-alias code="code-insiders"
+alias cursor="/opt/cursor/cursor.AppImage"
+alias muse="vim ~/the_definitive_guidebook/musings.md"

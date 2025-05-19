@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
-script_dir=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+set -e
 
-# Load utils
+script_dir=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 source "$script_dir/utils.sh"
 
+# Make sure curl is installed
+sudo apt-get install curl
+
+# Remove previous miniconda install and create new directory
+rm -rf ~/miniconda3
 mkdir -p ~/miniconda3
 
-# Determine Cursor config directory based on OS
+# Determine conda install commands based on OS
 case "$platform" in
     "mac")
         curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
@@ -31,4 +36,5 @@ case "$platform" in
         ;;
 esac
 
-bash conda init
+source ~/miniconda3/bin/activate
+conda init --all

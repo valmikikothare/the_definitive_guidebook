@@ -43,6 +43,8 @@ function dbash() {
 }
 
 # Aliases
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
 alias dcd="docker compose down"
 alias dcl="docker container ls -a"
 alias dcb="docker compose build --pull"

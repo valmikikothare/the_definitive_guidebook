@@ -122,7 +122,13 @@ pre-commit install
 pre-commit run --all-files
 ```
 
+### Large-file system (LFS) track files
+```bash
+git lfs track "*.dae"
+```
+
 ## Check ports
+
 ```bash
 sudo netstat -tulpn | grep LISTEN
 ```

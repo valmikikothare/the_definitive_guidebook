@@ -2,13 +2,9 @@
     "C_Cpp.clang_format_fallbackStyle": "Google",
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
     "C_Cpp.codeAnalysis.runAutomatically": true,
-    "cmake.pinnedCommands": [
-        "workbench.action.tasks.configureTaskRunner",
-        "workbench.action.tasks.runTask"
-    ],
     "cursor.cpp.enablePartialAccepts": true,
     "debug.allowBreakpointsEverywhere": true,
-    "editor.fastScrollSensitivity": 1,
+    "editor.fastScrollSensitivity": 4,
     "editor.fontFamily": "'JetBrainsMono Nerd Font Mono'",
     "editor.fontSize": 14,
     "editor.formatOnSave": true,
@@ -63,7 +59,9 @@
         "composer.startComposerPrompt",
         "platformio-ide.upload",
         "platformio-ide.build",
-        "workbench.action.toggleSidebarVisibility"
+        "workbench.action.toggleSidebarVisibility",
+        "workbench.action.focusLeftGroup",
+        "workbench.action.focusRightGroup"
     ],
     "terminal.integrated.defaultProfile.windows": "Git Bash",
     "terminal.integrated.fastScrollSensitivity": 1,
@@ -135,9 +133,6 @@
     "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
     "workbench.preferredLightColorTheme": "Catppuccin Latte",
     "xml.server.vmargs": "-Xmx256M",
-    "[cpp]": {
-        "editor.defaultFormatter": "ms-vscode.cpptools"
-    },
     "[dockerfile]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
@@ -173,7 +168,7 @@
     "cursor.cpp.disabledLanguages": [
         "plaintext"
     ],
-    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
     "vim.visualModeKeyBindings": [
         {
             "before": [
@@ -189,5 +184,6 @@
                 "N"
             ]
         }
-    ]
+    ],
+    "terminal.integrated.inheritEnv": false,
 }

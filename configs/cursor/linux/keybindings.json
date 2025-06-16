@@ -224,5 +224,9 @@
         "key": "ctrl+shift+e",
         "command": "-aichat.fixerrormessage",
         "when": "(arbitrary function)"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "composerMode.agent"
     }
 ]

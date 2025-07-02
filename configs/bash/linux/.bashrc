@@ -120,18 +120,20 @@ if ! shopt -oq posix; then
 fi
 
 # Export ~/.local/bin
-export PATH=/home/valmiki/.local/bin:$PATH
+export PATH=/home/$USER/.local/bin:$PATH
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/valmiki/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_path="/home/$USER/miniconda3/bin/conda" 
+__conda_setup="$($__conda_path 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/valmiki/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/valmiki/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/$USER/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/$USER/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/valmiki/miniconda3/bin:$PATH"
+        export PATH="/home/$USER/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -144,18 +146,14 @@ export unset PYTHON_PATH
 # source /usr/share/colcon_cd/function/colcon_cd.sh
 # source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 
+# Use Docker Bake as the build backend for compose
 export COMPOSE_BAKE=true
 
+# Default editor
+export EDITOR=/usr/bin/vim
+
+# Tabletop setup
+source $HOME/ws/src/tabletop/bin/setup.bash
+
+# Starship
 eval "$(starship init bash)"
-
-# pip bash completion start
-_pip_completion()
-{
-    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-                   COMP_CWORD=$COMP_CWORD \
-                   PIP_AUTO_COMPLETE=1 $1 2>/dev/null ) )
-}
-complete -o default -F _pip_completion pip
-# pip bash completion end
-
-eval "$(uv generate-shell-completion bash)"

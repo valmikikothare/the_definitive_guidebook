@@ -39,16 +39,36 @@ function dcu() {
 
 # docker exec -it <container_id> /bin/bash
 function dbash() {
-    docker exec -it $1 bash
+    if [ $# -ne 1 ]; then
+        echo "Usage: dbash <container_id>"
+        return 1
+    fi
+
+    case "$1" in
+        dev)
+            container="tabletop-devcontainer-1"
+            ;;
+        server)
+            container="tabletop-server-1"
+            ;;
+        *)
+            container="$1"
+            ;;
+    esac
+
+    docker exec -it $container bash
 }
 
 # Aliases
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
-alias dcd="docker compose down"
+alias dcs="docker container stop"
 alias dcl="docker container ls -a"
+alias dcp="docker container prune -f"
+alias dcs="docker container stop"
+alias dcd="docker compose down"
 alias dcb="docker compose build --pull"
-alias dcp="docker container prune"
+alias dil="docker image ls"
+alias dip="docker image prune"
 
 alias cursor="/opt/cursor/cursor.AppImage"
 alias muse="vim ~/the_definitive_guidebook/musings.md"
+alias ssh-keygen="ssh-keygen -t rsa -b 4096"

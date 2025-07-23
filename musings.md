@@ -19,19 +19,37 @@ To use the last argument of the previous command again, press `alt+.`
 
 ## Filesystem
 
+### Find files
+To find files, use the `find` command.
+```bash
+find <directory> -name <filename>
+```
+where filename can be a pattern.
+
+
+To find text in files, use the `grep` command.
+```bash
+grep [-H] [-r] [-i] <pattern> <path>
+```
+where:
+- `-H` is to print the file name instead of the line itself
+- `-r` is recursive
+- `i` is case insensitive
+- `pattern` can be a regular expression 
+- `path` can be a directory.
+
 ### Set ownership
 To set ownership of a file or directory to the current user:
-
 ```bash
 sudo chown -R $USER:$USER <file-or-directory>
 ```
 
 ### Set permissions
 To set permissions of a file or directory to the current user:
-
 ```bash
 sudo chmod -R <permissions> <file-or-directory>
 ```
+
 Common permissions:
 - 400	r--------	Readable by owner only
 - 500	r-x------	Avoid Changing

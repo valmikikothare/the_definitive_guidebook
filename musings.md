@@ -76,6 +76,11 @@ du -sh *
 ```
 where `s` stands for summary and `*` stands for all files and directories.
 
+To sort by file size, use
+```bash
+du -h * | sort -h
+```
+
 ## Git
 
 ### Stage file or directory modifications/additions

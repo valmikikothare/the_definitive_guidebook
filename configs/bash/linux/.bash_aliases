@@ -59,8 +59,18 @@ function dbash() {
     docker exec -it $container bash
 }
 
+function big-files() {
+    find $1 \
+        -not -path "*\.git*" \
+        -not -name "*\.pyc"\
+        -type f \
+        -printf "%kK\t%p\n" \
+        | sort -nr | head -n 10
+}
+
 # Aliases
 alias dcs="docker container stop"
+alias dcsdev="docker container stop tabletop-devcontainer-1"
 alias dcl="docker container ls -a"
 alias dcp="docker container prune -f"
 alias dcs="docker container stop"

@@ -79,6 +79,8 @@ alias dcb="docker compose build --pull"
 alias dil="docker image ls"
 alias dip="docker image prune"
 
+alias kssh="kitten ssh"
+
 alias cursor="/opt/cursor/cursor.AppImage"
 alias muse="vim ~/the_definitive_guidebook/musings.md"
 alias ssh-keygen="ssh-keygen -t rsa -b 4096"

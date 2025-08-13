@@ -63,6 +63,22 @@ Common permissions:
 - +rwx	            Add read/write/execute permission, respectively
 - -rwx	            Remove read/write/execute permission, respectively
 
+### Backup home directory
+To create a backup of the home directory:
+```bash
+curl -fsSL -o /var/tmp/ignorelist https://raw.githubusercontent.com/rubo77/rsync-homedir-excludes/refs/heads/master/rsync-homedir-excludes.txt
+sudo rsync -aP --exclude-from=/var/tmp/ignorelist /home/mules/ /hdd/backup/home/mules/
+```
+
+### Create system snapshot
+To create a system snapshot, use timeshift:
+```bash
+sudo apt install timeshift
+# or 
+sudo pacman -S timeshift
+timeshift --create [--comment "I'm about to fuck up"]
+```
+
 ### Disk usage
 To check disk usage by filesystem, use 
 ```bash
@@ -172,3 +188,18 @@ If you forget to start vim with sudo, you can still save the file with:
 ```bash
 :w !sudo tee %
 ```
+
+## File downloads
+
+### wget
+```bash
+wget -o <file> <url>
+```
+
+### curl
+```bash
+curl -fsSL -o <file> <url>
+```
+where `-fsSL` is for fail quickly, silent, show errors, and follow redirects,
+respectively.
+
